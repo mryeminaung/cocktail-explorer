@@ -8,3 +8,9 @@ export type drinkType = {
 	thumbnail: string;
 	ingredients: { name: string; measure: string }[];
 };
+
+export type Drink = {
+	idDrink: string;
+	strDrink: string;
+	strDrinkThumb: string;
+};

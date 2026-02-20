@@ -56,19 +56,31 @@ export default function RandomCocktail() {
 }
 
 function RandomCocktailCard({ cocktail }: { cocktail: drinkType }) {
+	const drink = {
+		strDrink: cocktail.name,
+		strDrinkThumb: cocktail.thumbnail,
+		idDrink: cocktail.id,
+	};
+
 	return (
 		<Card className="p-0 my-5 overflow-hidden">
-			<div className="flex flex-col md:flex-row items-center p-3">
-				<Image
-					src={cocktail.thumbnail}
-					alt={cocktail.name}
-					width={300}
-					height={100}
-					priority
-					className="object-fill h-75 w-full border rounded-xl overflow-hidden"
-				/>
+			<div className="flex flex-col md:flex-row items-center">
+				<div className="h-full">
+					<Image
+						src={cocktail.thumbnail}
+						alt={cocktail.name}
+						width={400}
+						height={100}
+						priority
+						className="object-fill h-full w-full border rounded-xl overflow-hidden"
+					/>
+				</div>
+
 				<div className="relative px-5 m-5 w-full">
-					<AddToFavorite className="absolute top-0 right-0" />
+					<AddToFavorite
+						cocktail={drink}
+						className="absolute top-0 right-0"
+					/>
 					<h3 className="text-2xl">{cocktail.name}</h3>
 					<p className="space-x-2 my-3 font-mono">
 						<Badge>{cocktail.category}</Badge>

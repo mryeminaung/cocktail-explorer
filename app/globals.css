@@ -4,6 +4,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Hide scrollbars for all elements */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
