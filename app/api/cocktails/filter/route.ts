@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-	const searchParams = request.nextUrl.searchParams;
+export async function GET(req: Request) {
+	const { searchParams } = new URL(req.url);
 	const type = searchParams.get("type");
 	const key = searchParams.get("key");
 

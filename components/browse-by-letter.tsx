@@ -6,7 +6,7 @@ import { useState } from "react";
 import CocktailCard from "./cocktail-card";
 
 async function fetchDrinks(keyword: string) {
-	const res = await fetch(`/api/cocktails?letter=${keyword}`);
+	const res = await fetch(`/api/cocktails/search?type=f&key=${keyword}`);
 	return res.json();
 }
 
@@ -19,8 +19,6 @@ export default function BrowseByLetter() {
 		queryFn: () => fetchDrinks(keyword),
 		enabled: !!keyword,
 	});
-
-	console.log(data);
 
 	return (
 		<section>

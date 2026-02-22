@@ -4,9 +4,10 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { Drink } from "@/types/cocktail";
 import { useQuery } from "@tanstack/react-query";
-import { Flame, GlassWater, Wine } from "lucide-react";
+import { Flame, GlassWater, Wine, X } from "lucide-react";
 import { useState } from "react";
 import CocktailCard from "./cocktail-card";
+import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 
@@ -91,7 +92,18 @@ function FilterCard({
 	return (
 		<>
 			<Card className="p-3 gap-2 my-5">
-				<h3 className="text-md uppercase">{title}</h3>
+				<div className="flex items-center justify-between">
+					<h3 className="text-md uppercase font-semibold">{title}</h3>
+					{filterKey && (
+						<Badge
+							className="hover:cursor-default"
+							onClick={() => setFilterKey("")}>
+							Clear
+							<X size={16} />
+						</Badge>
+					)}
+				</div>
+
 				<div className="flex flex-wrap gap-1">
 					{options.map((option) => (
 						<Button
@@ -108,14 +120,20 @@ function FilterCard({
 				</div>
 			</Card>
 			{drinks !== undefined && (
-				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
-					{drinks.map((drink) => (
-						<CocktailCard
-							key={drink.idDrink}
-							cocktail={drink}
-						/>
-					))}
-				</div>
+				<>
+					<div className="flex items-center justify-between">
+						<h3 className="text-2xl">{filterKey}</h3>
+						<Badge>{drinks.length} results</Badge>
+					</div>
+					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
+						{drinks.map((drink) => (
+							<CocktailCard
+								key={drink.idDrink}
+								cocktail={drink}
+							/>
+						))}
+					</div>
+				</>
 			)}
 
 			{isLoading && <p>Loading Skeleton....</p>}
