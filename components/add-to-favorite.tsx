@@ -24,11 +24,11 @@ export default function AddToFavorite({
 	};
 
 	return (
-		<div className={cn("p-2 rounded-full bg-white/80", className)}>
+		<div className={cn("p-2 rounded-full bg-primary/30", className)}>
 			<Heart
-				color={isFav ? "red" : "gray"}
-				fill={isFav ? "red" : "none"}
-				className={cn("cursor-pointer size-4 md:size-7")}
+				color={isFav ? "#ef4444" : "#6b7280"} // red-500 or gray-500
+				fill={isFav ? "#ef4444" : "none"}
+				className={cn("cursor-pointer size-4 md:size-5")}
 				onClick={() => handleAddToFav(cocktail)}
 			/>
 		</div>

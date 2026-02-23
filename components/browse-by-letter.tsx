@@ -22,7 +22,7 @@ export default function BrowseByLetter() {
 
 	return (
 		<section>
-			<h3 className="text-3xl font-semibold font-mono">Browse by Letter</h3>
+			<h3 className="text-4xl font-serif">Browse by Letter</h3>
 			<div className="flex items-center flex-wrap gap-2 mt-3 mb-5">
 				{LETTERS.map((letter, index) => {
 					return (
@@ -30,9 +30,9 @@ export default function BrowseByLetter() {
 							key={index}
 							onClick={() => setKeyword(letter)}
 							className={cn(
-								"cursor-pointer font-mono rounded-md px-3 py-1 transition-colors hover:bg-gray-200 bg-gray-500",
+								"cursor-pointer font-serif rounded-md px-3 py-1 transition-colors hover:bg-primary border text-black dark:text-white",
 								{
-									"bg-orange-300": letter === keyword,
+									"bg-primary": letter === keyword,
 								},
 							)}>
 							{letter}

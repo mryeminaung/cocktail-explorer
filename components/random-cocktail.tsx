@@ -12,6 +12,7 @@ import { Card } from "./ui/card";
 
 async function fetchRandomDrink() {
 	const res = await fetch(`/api/cocktails/random`);
+	if (!res.ok) throw new Error("Failed to fetch drink");
 	return res.json();
 }
 
@@ -26,18 +27,23 @@ export default function RandomCocktail() {
 	});
 
 	return (
-		<div>
-			<div className="flex items-center justify-between gap-2">
-				<div className="">
-					<h2 className="text-3xl font-semibold font-mono">
+		<div className="mb-5">
+			<div className="flex items-center justify-between gap-4 mb-6">
+				<div>
+					<span className="text-primary tracking-wider font-semibold uppercase text-[12px]">
+						✨ Featured
+					</span>
+					<h2 className="text-4xl md:text-5xl font-semibold font-serif">
 						Cocktail of the moment
 					</h2>
-					<p>Discover something new with every refresh</p>
+					<p className="text-muted-foreground">
+						Discover something new with every refresh
+					</p>
 				</div>
 				<Button
 					disabled={isFetching}
 					onClick={() => refetch()}
-					className="mb-4">
+					className="shrink-0 bg-primary">
 					<RefreshCw
 						className={cn(isFetching ? "animate-spin" : "")}
 						size={18}
@@ -47,9 +53,11 @@ export default function RandomCocktail() {
 			</div>
 
 			{isLoading ? (
-				<p>Loading...</p>
+				<Card className="h-100 flex items-center justify-center">
+					<p className="animate-pulse">Mixing your drink...</p>
+				</Card>
 			) : (
-				<RandomCocktailCard cocktail={data[0]} />
+				data && <RandomCocktailCard cocktail={data[0]} />
 			)}
 		</div>
 	);
@@ -63,45 +71,82 @@ function RandomCocktailCard({ cocktail }: { cocktail: drinkType }) {
 	};
 
 	return (
-		<Card className="p-0 my-5 overflow-hidden">
-			<div className="flex flex-col md:flex-row items-center">
-				<div className="h-full">
+		<Card className="p-0 overflow-hidden border-none shadow-lg">
+			<div className="grid grid-cols-1 md:grid-cols-2 min-h-125">
+				{/* Left Side: Image (The 50%) */}
+				<div className="relative w-full h-80 md:h-full">
 					<Image
 						src={cocktail.thumbnail}
 						alt={cocktail.name}
-						width={400}
-						height={100}
+						fill
 						priority
-						className="object-fill h-full w-full border rounded-xl overflow-hidden"
+						sizes="(max-width: 768px) 100vw, 50vw"
+						className="object-cover"
 					/>
 				</div>
 
-				<div className="relative px-5 m-5 w-full">
+				{/* Right Side: Content (The other 50%) */}
+				<div className="relative p-8 md:p-12 flex flex-col justify-center bg-card">
 					<AddToFavorite
 						cocktail={drink}
-						className="absolute top-0 right-0"
+						className="absolute top-6 right-6 scale-110"
 					/>
-					<h3 className="text-2xl">{cocktail.name}</h3>
-					<p className="space-x-2 my-3 font-mono">
-						<Badge>{cocktail.category}</Badge>
-						<Badge>{cocktail.alcoholic}</Badge>
-						<Badge>{cocktail.glass}</Badge>
-					</p>
-					<p>{cocktail.instructions}</p>
-					<h4 className="uppercase font-semibold my-3">Ingredients</h4>
-					<p className="space-x-2">
-						{cocktail.ingredients.map((ing, index) => (
+
+					<div className="space-y-2">
+						<h3 className="text-3xl md:text-4xl font-bold tracking-tight">
+							{cocktail.name}
+						</h3>
+
+						<div className="flex flex-wrap gap-2 pt-2">
 							<Badge
-								key={index}
-								className="space-x-3 font-mono">
-								{ing.measure}
-								{ing.name}
+								variant="secondary"
+								className="rounded-md">
+								{cocktail.category}
 							</Badge>
-						))}
-					</p>
+							<Badge
+								variant="outline"
+								className="rounded-md">
+								{cocktail.alcoholic}
+							</Badge>
+							<Badge
+								variant="outline"
+								className="rounded-md">
+								{cocktail.glass}
+							</Badge>
+						</div>
+					</div>
+
+					<div className="mt-6">
+						<h4 className="text-[12px] font-bold uppercase tracking-widest text-muted-foreground mb-2">
+							Instructions
+						</h4>
+						<p className="text-sm leading-relaxed text-balance">
+							{cocktail.instructions}
+						</p>
+					</div>
+
+					<div className="mt-6">
+						<h4 className="text-[12px] font-bold uppercase tracking-widest text-muted-foreground mb-3">
+							Ingredients
+						</h4>
+						<div className="flex flex-wrap gap-2">
+							{cocktail.ingredients.map((ing, index) => (
+								<Badge
+									key={index}
+									variant="secondary"
+									className="font-mono text-[10px] px-2 py-0.5">
+									{ing.measure && (
+										<span className="opacity-70 mr-1">{ing.measure}</span>
+									)}
+									{ing.name}
+								</Badge>
+							))}
+						</div>
+					</div>
+
 					<Button
-						className="mt-3 rounded-xl"
-						size={"sm"}>
+						className="mt-8 w-fit font-medium rounded-full px-8"
+						size="sm">
 						View Full Cocktail Details
 					</Button>
 				</div>

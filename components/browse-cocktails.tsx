@@ -1,12 +1,12 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { Drink } from "@/types/cocktail";
 import { useQuery } from "@tanstack/react-query";
 import { Flame, GlassWater, Wine, X } from "lucide-react";
 import { useState } from "react";
 import CocktailCard from "./cocktail-card";
+import Skeleton from "./skeleton";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
@@ -104,15 +104,17 @@ function FilterCard({
 					)}
 				</div>
 
-				<div className="flex flex-wrap gap-1">
+				<div className="flex flex-wrap gap-2">
 					{options.map((option) => (
 						<Button
 							onClick={() => setFilterKey(option.name)}
 							key={option.id}
 							size={"sm"}
 							className={cn(
-								"p-4 border rounded-full text-sm hover:bg-zinc-500 text-white",
-								option.name === filterKey ? "bg-zinc-500" : "",
+								"p-4 border rounded-full text-sm",
+								option.name === filterKey
+									? "bg-primary text-primary-foreground"
+									: "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary",
 							)}>
 							{option.name}
 						</Button>
@@ -126,21 +128,31 @@ function FilterCard({
 						<Badge>{drinks.length} results</Badge>
 					</div>
 					<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
-						{drinks.map((drink) => (
-							<CocktailCard
-								key={drink.idDrink}
-								cocktail={drink}
-							/>
-						))}
+						{drinks.length > 0 &&
+							drinks.map((drink) => (
+								<CocktailCard
+									key={drink.idDrink}
+									cocktail={drink}
+								/>
+							))}
 					</div>
 				</>
 			)}
 
-			{isLoading && <p>Loading Skeleton....</p>}
+			{isLoading && (
+				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
+					{Array.from({ length: 6 }).map((_, idx) => (
+						<Skeleton
+							key={idx}
+							type="cocktail-card"
+						/>
+					))}
+				</div>
+			)}
 
 			{!filterKey && (
-				<Card className="border border-dashed items-center py-20 gap-0">
-					<span className="rounded-full bg-gray-200 p-4">{icon}</span>
+				<Card className="border text-muted-foreground border-dashed border-primary items-center py-20 gap-0">
+					<span className="rounded-full bg-primary-foreground p-4">{icon}</span>
 					<p>{info}</p>
 					<p className="text-sm">{countInfo}</p>
 				</Card>
@@ -178,42 +190,50 @@ export default function BrowseCocktails() {
 
 	return (
 		<section>
-			<Tabs
-				defaultValue="category"
-				className="my-5">
-				<TabsList className="bg-primary-foreground h-auto py-5">
-					<TabsTrigger
-						className="rounded-full py-4 px-8"
-						value="category"
-						onClick={() => {
-							setActiveTab("category");
-							setFilterKey("");
-						}}>
-						<Wine size={20} />
-						By Category
-					</TabsTrigger>
-					<TabsTrigger
-						className="rounded-full py-4 px-8"
-						value="glass"
-						onClick={() => {
-							setActiveTab("glass");
-							setFilterKey("");
-						}}>
-						<GlassWater size={20} />
-						By Glass
-					</TabsTrigger>
-					<TabsTrigger
-						className="rounded-full py-4 px-8"
-						value="type"
-						onClick={() => {
-							setActiveTab("type");
-							setFilterKey("");
-						}}>
-						<Flame size={20} />
-						By Type
-					</TabsTrigger>
-				</TabsList>
-			</Tabs>
+			<div className="flex items-center flex-wrap gap-3 my-5">
+				<Button
+					onClick={() => {
+						setActiveTab("category");
+						setFilterKey("");
+					}}
+					className={cn(
+						"py-5 px-8! rounded-full",
+						activeTab === "category"
+							? "bg-primary text-primary-foreground"
+							: "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary",
+					)}>
+					<Wine className="mr-1 size-4" />
+					By Category
+				</Button>
+				<Button
+					onClick={() => {
+						setActiveTab("glass");
+						setFilterKey("");
+					}}
+					className={cn(
+						"py-5! px-8! rounded-full",
+						activeTab === "glass"
+							? "bg-primary text-primary-foreground"
+							: "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary",
+					)}>
+					<GlassWater className="mr-1 size-4" />
+					By Glass
+				</Button>
+				<Button
+					onClick={() => {
+						setActiveTab("type");
+						setFilterKey("");
+					}}
+					className={cn(
+						"py-5 px-8! rounded-full",
+						activeTab === "type"
+							? "bg-primary text-primary-foreground"
+							: "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary",
+					)}>
+					<Flame className="mr-1 size-4" />
+					By Type
+				</Button>
+			</div>
 
 			{activeTab === "category" && (
 				<FilterCard

@@ -12,8 +12,10 @@ export default function FavoritesPage() {
 	return (
 		<AppLayout>
 			<div className="">
-				<h2 className="text-3xl">Your Favorites</h2>
-				<p>{favCocktails.length} saved cocktails</p>
+				<h2 className="text-5xl font-semibold font-serif">Your Favorites</h2>
+				<p className="text-muted-foreground">
+					{favCocktails.length} saved cocktails
+				</p>
 			</div>
 			{favCocktails.length > 0 ? (
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">

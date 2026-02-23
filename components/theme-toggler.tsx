@@ -1,7 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { Monitor, Moon, Sun } from "lucide-react";
-import { useState } from "react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 const themeOptions = [
 	{ icon: Sun, value: "light", label: "Light mode" },
@@ -10,14 +11,22 @@ const themeOptions = [
 ] as const;
 
 export default function ThemeToggler() {
-	const [activeTheme, setActiveTheme] = useState<string>("light");
+	const { setTheme, theme } = useTheme();
+	const [activeTheme, setActiveTheme] = useState(theme);
+
+	useEffect(() => {
+		setActiveTheme(theme);
+	}, [theme]);
 
 	return (
 		<div className="flex items-center gap-1 rounded-full border border-border p-1">
 			{themeOptions.map((option) => (
 				<button
 					key={option.value}
-					onClick={() => setActiveTheme(option.value)}
+					onClick={() => {
+						setActiveTheme(option.value);
+						setTheme(option.value);
+					}}
 					aria-label={option.label}
 					className={cn(
 						"rounded-full p-1.5 transition-colors",

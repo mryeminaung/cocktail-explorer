@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
 				protocol: "https",
 				hostname: "www.thecocktaildb.com",
 				port: "",
-				pathname: "/images/media/**",
+				pathname: "/images/*/**",
 			},
 		],
 	},

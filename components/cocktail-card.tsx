@@ -31,7 +31,7 @@ export default function CocktailCard({ cocktail }: CocktailCardProps) {
 				cocktail={drink}
 				className="absolute top-2 right-2"
 			/>
-			<CardTitle className="absolute z-100 bottom-3 left-3 sm:bottom-5 sm:left-5 text-white text-[13px] sm:text-sm">
+			<CardTitle className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 text-primary bg-white px-2 rounded-full font-serif text-[12px] sm:text-sm font-medium">
 				{cocktail.strDrink}
 			</CardTitle>
 		</Card>
