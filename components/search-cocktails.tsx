@@ -1,12 +1,14 @@
 "use client";
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { FolderPen, ShoppingCart } from "lucide-react";
 import { useState } from "react";
 import CocktailCard from "./cocktail-card";
 import SearchByIngredients from "./search-by-ingredients";
 import SearchByName from "./search-by-name";
+import Skeleton from "./skeleton";
+import { Button } from "./ui/button";
 
 export default function SearchCocktails() {
 	const [activeTab, setActiveTab] = useState<"name" | "ingredients">("name");
@@ -34,56 +36,68 @@ export default function SearchCocktails() {
 
 	return (
 		<section>
-			<Tabs
-				defaultValue="name"
-				className="my-5">
-				<TabsList className="bg-primary-foreground h-auto py-5">
-					<TabsTrigger
-						className="rounded-full py-4 px-8"
-						value="name"
-						onClick={() => {
-							setActiveTab("name");
-							setFilterKey("");
-						}}>
-						<FolderPen size={20} />
-						By Name
-					</TabsTrigger>
-					<TabsTrigger
-						className="rounded-full py-4 px-8"
-						value="ingredients"
-						onClick={() => {
-							setActiveTab("ingredients");
-							setFilterKey("");
-						}}>
-						<ShoppingCart size={20} />
-						By Ingredients
-					</TabsTrigger>
-				</TabsList>
-			</Tabs>
+			<div className="flex items-center flex-wrap gap-3 my-5">
+				<Button
+					className={cn(
+						"py-5 px-8! rounded-full",
+						activeTab === "name"
+							? "bg-primary text-primary-foreground"
+							: "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary",
+					)}
+					onClick={() => {
+						setActiveTab("name");
+						setFilterKey("");
+					}}>
+					<FolderPen className="mr-1 size-4" />
+					By Name
+				</Button>
+				<Button
+					className={cn(
+						"py-5 px-8! rounded-full",
+						activeTab === "ingredients"
+							? "bg-primary text-primary-foreground"
+							: "bg-secondary text-secondary-foreground hover:bg-primary/10 hover:text-primary",
+					)}
+					onClick={() => {
+						setActiveTab("ingredients");
+						setFilterKey("");
+					}}>
+					<ShoppingCart className="mr-1 size-4" />
+					By Ingredients
+				</Button>
+			</div>
 
 			{activeTab === "name" && (
 				<>
 					<SearchByName setFilterKey={setFilterKey} />
 					{!filterKey && (
-						<p className="text-center py-20">
+						<p className="text-center py-20 text-muted-foreground">
 							Start typing to search for cocktails by name
 						</p>
 					)}
 				</>
 			)}
-
 			{activeTab === "ingredients" && (
 				<>
 					<SearchByIngredients setFilterKey={setFilterKey} />
 					{!filterKey && (
-						<p className="text-center py-20">
+						<p className="text-center py-20 text-muted-foreground">
 							Start typing an ingredient to find matching cocktails
 						</p>
 					)}
 				</>
 			)}
 
-			{isLoading && <p className="text-center py-20">Loading...</p>}
+			{isLoading && (
+				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
+					{Array.from({ length: 8 }).map((_, i) => (
+						<Skeleton
+							key={i}
+							type="cocktail-card"
+						/>
+					))}
+				</div>
+			)}
 
 			{data?.drinks !== null && typeof data?.drinks !== "string" ? (
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
@@ -95,7 +109,7 @@ export default function SearchCocktails() {
 					))}
 				</div>
 			) : (
-				`No cocktails found for "${filterKey}"`
+				<p className="mt-5">No cocktails found for "{filterKey}"</p>
 			)}
 		</section>
 	);

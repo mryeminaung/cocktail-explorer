@@ -141,7 +141,7 @@ function FilterCard({
 
 			{isLoading && (
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
-					{Array.from({ length: 6 }).map((_, idx) => (
+					{Array.from({ length: 8 }).map((_, idx) => (
 						<Skeleton
 							key={idx}
 							type="cocktail-card"

@@ -15,8 +15,8 @@ export default function Skeleton({
 	}
 
 	return (
-		<div className="relative animate-pulse rounded-lg bg-gray-100">
-			<div className="h-32 bg-gray-300 rounded mb-3" />
+		<div className="relative animate-pulse h-40 rounded-lg bg-primary">
+			<div className="absolute bottom-3 left-3 py-3 w-25 rounded" />
 		</div>
 	);
 }
