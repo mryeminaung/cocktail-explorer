@@ -1,12 +1,13 @@
 import BrowseByIngredients from "@/components/browse-by-ingredients";
 import AppLayout from "@/layouts/app-layout";
 
-export default function IngredientsPage({
+export default async function IngredientsPage({
 	searchParams,
 }: {
-	searchParams: { q?: string };
+	searchParams: Promise<{ q?: string }>;
 }) {
-	const ingredientQuery = searchParams.q || "";
+	const { q } = await searchParams;
+	const ingredientQuery = q || "";
 
 	return (
 		<AppLayout>
