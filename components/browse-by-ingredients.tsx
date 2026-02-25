@@ -31,7 +31,7 @@ export default function BrowseByIngredients() {
 		return await res.json();
 	};
 
-	const { data: ingredients } = useQuery({
+	const { data: ingredients, isLoading: ingredientsLoading } = useQuery({
 		queryKey: ["ingredients"],
 		queryFn: fetchIngredients,
 	});
@@ -92,23 +92,34 @@ export default function BrowseByIngredients() {
 						</div>
 					)}
 
-					{filteredIngredients && (
+					{ingredientsLoading ? (
 						<Card className="max-h-[50vh] gap-0 border border-primary border-dashed rounded-lg overflow-y-auto p-2">
-							{filteredIngredients.map((ingredient: any) => (
-								<IngredientCard
-									key={ingredient.name}
-									ingredient={ingredient}
-									currentIngredient={currentIngredient}
-									setCurrentIngredient={setCurrentIngredient}
-									setIngredientQuery={setIngredientQuery}
+							{[...Array(10)].map((_, idx) => (
+								<Skeleton
+									key={idx}
+									type="ingredient-card"
 								/>
 							))}
-							{filteredIngredients.length === 0 && (
-								<p className="text-sm text-muted-foreground py-5 text-center">
-									No ingredients match your search
-								</p>
-							)}
 						</Card>
+					) : (
+						filteredIngredients && (
+							<Card className="max-h-[50vh] gap-0 border border-primary border-dashed rounded-lg overflow-y-auto p-2">
+								{filteredIngredients.map((ingredient: any) => (
+									<IngredientCard
+										key={ingredient.name}
+										ingredient={ingredient}
+										currentIngredient={currentIngredient}
+										setCurrentIngredient={setCurrentIngredient}
+										setIngredientQuery={setIngredientQuery}
+									/>
+								))}
+								{filteredIngredients.length === 0 && (
+									<p className="text-sm text-muted-foreground py-5 text-center">
+										No ingredients match your search
+									</p>
+								)}
+							</Card>
+						)
 					)}
 				</div>
 
@@ -126,7 +137,7 @@ export default function BrowseByIngredients() {
 						)}
 					</div>
 
-					{currentIngredient === null && (
+					{currentIngredient === null && !ingredientsLoading && (
 						<Card className="text-sm border-primary border-dashed text-gray-500 border py-10 rounded-lg text-center flex flex-col gap-y-3 items-center justify-center">
 							<span className="rounded-full border bg-primary-foreground p-4">
 								<Wine size={24} />
@@ -147,7 +158,13 @@ export default function BrowseByIngredients() {
 								/>
 							))}
 						{isLoading &&
-							[...Array(20)].map((_, idx) => <Skeleton type="cocktail-card" />)}
+							currentIngredient &&
+							[...Array(20)].map((_, idx) => (
+								<Skeleton
+									key={idx}
+									type="cocktail-card"
+								/>
+							))}
 					</div>
 				</div>
 			</section>

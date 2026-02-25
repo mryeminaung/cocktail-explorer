@@ -1,3 +1,6 @@
+import { redirect } from "next/navigation";
+
 export default function CocktailPage() {
-	return <div>page</div>;
+	redirect("/browse");
+	return null;
 }

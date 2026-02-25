@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import CocktailCard from "./cocktail-card";
+import Skeleton from "./skeleton";
 
 async function fetchDrinks(keyword: string) {
 	const res = await fetch(`/api/cocktails/search?type=f&key=${keyword}`);
@@ -40,9 +41,20 @@ export default function BrowseByLetter() {
 					);
 				})}
 			</div>
-			{keyword && <p>Cocktails starting with "{keyword}"</p>}
+			{keyword && (
+				<p className="text-muted-foreground font-semibold font-serif">
+					Cocktails starting with "{keyword}"
+				</p>
+			)}
 			{isLoading ? (
-				<p>Loading...</p>
+				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
+					{Array.from({ length: 10 }).map((_, index) => (
+						<Skeleton
+							key={index}
+							type="cocktail-card"
+						/>
+					))}
+				</div>
 			) : (
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
 					{data?.drinks !== null ? (

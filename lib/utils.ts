@@ -24,6 +24,7 @@ export function formatDrink(drink: any): drinkType {
 	return {
 		id: drink.idDrink,
 		name: drink.strDrink,
+		tags: drink.strTags ? drink.strTags.split(",").map((tag: string) => tag.trim()) : [],
 		category: drink.strCategory,
 		alcoholic: drink.strAlcoholic,
 		glass: drink.strGlass,

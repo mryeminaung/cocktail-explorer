@@ -1,5 +1,6 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import AddToFavorite from "./add-to-favorite";
 
 type CocktailCardProps = {
@@ -12,6 +13,8 @@ type CocktailCardProps = {
 };
 
 export default function CocktailCard({ cocktail }: CocktailCardProps) {
+	const router = useRouter();
+
 	const drink = {
 		strDrink: cocktail.strDrink,
 		strDrinkThumb: cocktail.strDrinkThumb,
@@ -19,7 +22,9 @@ export default function CocktailCard({ cocktail }: CocktailCardProps) {
 	};
 
 	return (
-		<Card className="relative overflow-hidden p-0 group hover:cursor-pointer">
+		<Card
+			onClick={() => router.push(`/cocktail/${cocktail.idDrink}`)}
+			className="relative overflow-hidden p-0 group hover:cursor-pointer">
 			<Image
 				src={cocktail.strDrinkThumb}
 				alt="Event cover"

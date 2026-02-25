@@ -12,25 +12,24 @@ const themeOptions = [
 
 export default function ThemeToggler() {
 	const { setTheme, theme } = useTheme();
-	const [activeTheme, setActiveTheme] = useState(theme);
+	const [mounted, setMounted] = useState(false);
 
 	useEffect(() => {
-		setActiveTheme(theme);
-	}, [theme]);
+		setMounted(true);
+	}, []);
+
+	if (!mounted) return null; // Prevent hydration mismatch
 
 	return (
 		<div className="flex items-center gap-1 rounded-full border border-border p-1">
 			{themeOptions.map((option) => (
 				<button
 					key={option.value}
-					onClick={() => {
-						setActiveTheme(option.value);
-						setTheme(option.value);
-					}}
+					onClick={() => setTheme(option.value)}
 					aria-label={option.label}
 					className={cn(
 						"rounded-full p-1.5 transition-colors",
-						activeTheme === option.value
+						theme === option.value
 							? "bg-accent text-accent-foreground"
 							: "text-muted-foreground hover:text-foreground",
 					)}>

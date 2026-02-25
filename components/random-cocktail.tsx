@@ -5,6 +5,7 @@ import { drinkType } from "@/types/cocktail";
 import { useQuery } from "@tanstack/react-query";
 import { RefreshCw } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import AddToFavorite from "./add-to-favorite";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
@@ -43,7 +44,7 @@ export default function RandomCocktail() {
 				<Button
 					disabled={isFetching}
 					onClick={() => refetch()}
-					className="shrink-0 bg-primary">
+					className="shrink-0 bg-primary rounded-full">
 					<RefreshCw
 						className={cn(isFetching ? "animate-spin" : "")}
 						size={18}
@@ -64,6 +65,8 @@ export default function RandomCocktail() {
 }
 
 function RandomCocktailCard({ cocktail }: { cocktail: drinkType }) {
+	const router = useRouter();
+
 	const drink = {
 		strDrink: cocktail.name,
 		strDrinkThumb: cocktail.thumbnail,
@@ -93,7 +96,7 @@ function RandomCocktailCard({ cocktail }: { cocktail: drinkType }) {
 					/>
 
 					<div className="space-y-2">
-						<h3 className="text-3xl md:text-4xl font-bold tracking-tight">
+						<h3 className="text-3xl font-serif md:text-4xl font-bold tracking-tight">
 							{cocktail.name}
 						</h3>
 
@@ -145,6 +148,7 @@ function RandomCocktailCard({ cocktail }: { cocktail: drinkType }) {
 					</div>
 
 					<Button
+						onClick={() => router.push(`/cocktail/${cocktail.id}`)}
 						className="mt-8 w-fit font-medium rounded-full px-8"
 						size="sm">
 						View Full Cocktail Details

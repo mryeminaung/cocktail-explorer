@@ -1,7 +1,7 @@
 export default function Skeleton({
 	type,
 }: {
-	type: "random" | "cocktail-card";
+	type: "random" | "cocktail-card" | "ingredient-card";
 }) {
 	if (type === "random") {
 		return (
@@ -10,6 +10,15 @@ export default function Skeleton({
 				<div className="h-6 bg-gray-300 rounded w-3/4 mb-2" />
 				<div className="h-4 bg-gray-200 rounded w-1/2 mb-2" />
 				<div className="h-4 bg-gray-200 rounded w-1/3" />
+			</div>
+		);
+	}
+
+	if (type === "ingredient-card") {
+		return (
+			<div className="flex items-center mb-1 py-1 rounded-md gap-x-2 pl-2 animate-pulse">
+				<div className="h-8 w-8 bg-primary/10 rounded-md" />
+				<div className="h-4 w-full bg-primary/10 rounded-md" />
 			</div>
 		);
 	}
