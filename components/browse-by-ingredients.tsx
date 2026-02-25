@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Search, Wine, X } from "lucide-react";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import CocktailCard from "./cocktail-card";
 import IngredientCard from "./ingredient-card";
@@ -13,7 +14,11 @@ import { Card } from "./ui/card";
 import { Input } from "./ui/input";
 
 export default function BrowseByIngredients() {
-	const [ingredientQuery, setIngredientQuery] = useState<string>("");
+	const searchParams = useSearchParams();
+
+	const [ingredientQuery, setIngredientQuery] = useState<string>(
+		searchParams.get("q") ?? "",
+	);
 	const [currentIngredient, setCurrentIngredient] = useState<{
 		name: string;
 		thumbnail: string;
@@ -48,7 +53,7 @@ export default function BrowseByIngredients() {
 	return (
 		<>
 			<section className="grid grid-cols-1 md:grid-cols-7 my-5 gap-10">
-				<div className="col-span-2">
+				<div className="col-span-5 md:col-span-2">
 					<div className="relative mb-3">
 						<Search
 							className="absolute top-3 left-2 text-muted-foreground"

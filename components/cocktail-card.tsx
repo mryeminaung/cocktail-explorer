@@ -30,14 +30,15 @@ export default function CocktailCard({ cocktail }: CocktailCardProps) {
 				alt="Event cover"
 				width={100}
 				height={50}
+				loading="eager"
 				className="object-cover w-full transition-transform duration-300 group-hover:scale-110"
 			/>
 			<AddToFavorite
 				cocktail={drink}
 				className="absolute top-2 right-2"
 			/>
-			<CardTitle className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 text-primary bg-white px-2 rounded-full font-serif text-[12px] sm:text-sm font-medium">
-				{cocktail.strDrink}
+			<CardTitle className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 text-primary bg-white px-2 rounded-full font-serif text-[12px] sm:text-sm font-medium line-clamp-1">
+				{cocktail.strDrink.slice(0, 20)}
 			</CardTitle>
 		</Card>
 	);

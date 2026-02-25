@@ -30,24 +30,23 @@ export default function CocktailDetailPage() {
 		},
 	});
 
-	console.log("detail : ", data);
-
 	return (
-		<div className="md:px-10 lg:px-16">
-			<Link
-				href={"/"}
-				className="text-sm mb-6 rounded-full bg-primary flex items-center gap-1 w-max px-3 py-1 text-white">
-				<ArrowLeft className="w-4 h-4" />
-				<span>Back</span>
-			</Link>
-
-			{isLoading ? (
-				<Skeleton type="random" />
-			) : (
-				<CocktailDetail cocktail={data[0]} />
-			)}
+		<section>
+			<div className="md:px-10 lg:px-12">
+				<Link
+					href={"/"}
+					className="text-sm mb-6 rounded-full bg-primary flex items-center gap-1 w-max px-3 py-1 text-white">
+					<ArrowLeft className="w-4 h-4" />
+					<span>Back</span>
+				</Link>
+				{isLoading ? (
+					<Skeleton type="cocktail-detail" />
+				) : (
+					<CocktailDetail cocktail={data[0]} />
+				)}
+			</div>
 
 			{data && <SimilarCocktails ingredient={data[0]?.ingredients[0]} />}
-		</div>
+		</section>
 	);
 }

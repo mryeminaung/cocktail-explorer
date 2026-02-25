@@ -24,7 +24,7 @@ export default function SimilarCocktails({
 	});
 
 	return (
-		<section className="my-5">
+		<section className="my-8">
 			<div className="">
 				<h3 className="text-3xl font-serif font-semibold">Similar Cocktails</h3>
 				<p className="text-muted-foreground">
@@ -34,15 +34,21 @@ export default function SimilarCocktails({
 			{isLoading ? (
 				<div className="flex gap-4 mt-4">
 					{[...Array(5)].map((_, i) => (
-						<Skeleton type="cocktail-card" />
+						<Skeleton
+							key={i}
+							type="cocktail-card"
+						/>
 					))}
 				</div>
 			) : (
 				<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 my-5">
 					{data.drinks && data.drinks.length > 0 ? (
-						data.drinks
-							.slice(0, 10)
-							.map((drink: any) => <CocktailCard cocktail={drink} />)
+						data.drinks.slice(0, 10).map((drink: any, idx: any) => (
+							<CocktailCard
+								key={idx}
+								cocktail={drink}
+							/>
+						))
 					) : (
 						<p className="text-muted-foreground">No similar cocktails found.</p>
 					)}

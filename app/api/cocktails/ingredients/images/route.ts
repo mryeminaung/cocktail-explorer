@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
-	const res = await fetch(`${process.env.COCKTAIL_API_URL}/list.php?i=list`);
-	const data = await res.json();
+export async function GET(request: Request) {
+	const { searchParams } = new URL(request.url);
+	const ingredient = searchParams.get("ingredient");
 
-	const ingredients = data.drinks.map((item: { strIngredient1: string }) => ({
-		name: item.strIngredient1,
-		thumbnail: `https://www.thecocktaildb.com/images/ingredients/${item.strIngredient1}-small.png`,
-	}));
+	if (!ingredient) {
+		return NextResponse.json(
+			{ error: "Missing ingredient parameter" },
+			{ status: 400 },
+		);
+	}
 
-	return NextResponse.json(ingredients);
+	const imageUrl = `https://www.thecocktaildb.com/images/ingredients/${ingredient}-small.png`;
+
+	return NextResponse.json({ image: imageUrl });
 }
