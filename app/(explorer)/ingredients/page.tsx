@@ -1,7 +1,13 @@
 import BrowseByIngredients from "@/components/browse-by-ingredients";
 import AppLayout from "@/layouts/app-layout";
 
-export default function IngredientsPage() {
+export default function IngredientsPage({
+	searchParams,
+}: {
+	searchParams: { q?: string };
+}) {
+	const ingredientQuery = searchParams.q || "";
+
 	return (
 		<AppLayout>
 			<div className="">
@@ -12,7 +18,7 @@ export default function IngredientsPage() {
 					Browse all cocktail ingredients and discover drinks made with them
 				</p>
 			</div>
-			<BrowseByIngredients />
+			<BrowseByIngredients initialQuery={ingredientQuery} />
 		</AppLayout>
 	);
 }

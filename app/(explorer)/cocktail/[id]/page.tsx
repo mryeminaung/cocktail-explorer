@@ -7,7 +7,7 @@ import SimilarCocktails from "@/components/similar-cocktails";
 import Skeleton from "@/components/skeleton";
 import { formatDrink } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Home } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -21,7 +21,7 @@ export default function CocktailDetailPage() {
 		return res.json();
 	};
 
-	const { data, isLoading } = useQuery({
+	const { data, isLoading, isError } = useQuery({
 		queryKey: ["cocktail", id],
 		queryFn: fetchCocktailDetail,
 		enabled: !!id,
@@ -32,21 +32,46 @@ export default function CocktailDetailPage() {
 
 	return (
 		<section>
-			<div className="md:px-10 lg:px-12">
-				<Link
-					href={"/"}
-					className="text-sm mb-6 rounded-full bg-primary flex items-center gap-1 w-max px-3 py-1 text-white">
-					<ArrowLeft className="w-4 h-4" />
-					<span>Back</span>
-				</Link>
-				{isLoading ? (
-					<Skeleton type="cocktail-detail" />
-				) : (
-					<CocktailDetail cocktail={data[0]} />
-				)}
-			</div>
+			{isError ? (
+				<div className="flex flex-col items-center justify-center min-vh-100 px-6 py-24 text-center">
+					{/* Subtle background glow/effect to match Liquid Index style */}
+					<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/10 blur-[150px] pointer-events-none" />
 
-			{data && <SimilarCocktails ingredient={data[0]?.ingredients[0]} />}
+					<h1 className="text-8xl font-black text-primary tracking-tighter mb-4">
+						404
+					</h1>
+
+					<p className="text-muted-foreground max-w-md mb-10">
+						The index entry you're looking for has been moved, archived, or
+						never existed in this website.
+					</p>
+
+					<Link
+						href="/"
+						className="flex items-center justify-center gap-2 px-5 text-sm py-2 bg-primary text-white rounded-full  transition-all transform ">
+						<Home size={18} />
+						Back to Home
+					</Link>
+				</div>
+			) : (
+				<>
+					<div className="md:px-10 lg:px-12">
+						<Link
+							href={"/"}
+							className="text-sm mb-6 rounded-full bg-primary flex items-center gap-1 w-max px-3 py-1 text-white">
+							<ArrowLeft className="w-4 h-4" />
+							<span>Back</span>
+						</Link>
+						{isLoading ? (
+							<Skeleton type="cocktail-detail" />
+						) : (
+							data && <CocktailDetail cocktail={data[0]} />
+						)}
+					</div>
+
+					{data && <SimilarCocktails ingredient={data[0]?.ingredients[0]} />}
+				</>
+			)}
 		</section>
 	);
 }
