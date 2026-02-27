@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
-import { useFavCocktail } from "@/stores/useFavCocktailStore";
+import { useFavCocktail } from "@/stores/use-favcocktail-store";
 import { Drink } from "@/types/cocktail";
 import { Heart } from "lucide-react";
 
-export default function AddToFavorite({
+export default function ToggleFavorite({
 	cocktail,
 	className,
 }: {
@@ -24,12 +24,16 @@ export default function AddToFavorite({
 	};
 
 	return (
-		<div className={cn("p-2 rounded-full bg-primary/30", className)}>
+		<div
+			onClick={(e) => {
+				e.stopPropagation();
+				handleAddToFav(cocktail);
+			}}
+			className={cn("p-2 z-999 rounded-full bg-primary/30", className)}>
 			<Heart
 				color={isFav ? "#ef4444" : "#6b7280"} // red-500 or gray-500
 				fill={isFav ? "#ef4444" : "none"}
 				className={cn("cursor-pointer size-4 md:size-5")}
-				onClick={() => handleAddToFav(cocktail)}
 			/>
 		</div>
 	);

@@ -1,12 +1,5 @@
-import BrowseByLetter from "@/components/browse-by-letter";
-import RandomCocktail from "@/components/random-cocktail";
-import AppLayout from "@/layouts/app-layout";
+import HomePage from "@/features/home";
 
 export default function Home() {
-	return (
-		<AppLayout>
-			<RandomCocktail />
-			<BrowseByLetter />
-		</AppLayout>
-	);
+	return <HomePage />;
 }

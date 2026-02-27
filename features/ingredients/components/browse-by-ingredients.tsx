@@ -1,16 +1,16 @@
 "use client";
 
+import CocktailCard from "@/components/cocktail-card";
+import Skeleton from "@/components/skeleton";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { Search, Wine, X } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import CocktailCard from "./cocktail-card";
 import IngredientCard from "./ingredient-card";
-import Skeleton from "./skeleton";
-import { Badge } from "./ui/badge";
-import { Card } from "./ui/card";
-import { Input } from "./ui/input";
 
 export default function BrowseByIngredients({
 	initialQuery,

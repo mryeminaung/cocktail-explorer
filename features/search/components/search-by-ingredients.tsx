@@ -1,12 +1,14 @@
 import { Search } from "lucide-react";
 import { useRef } from "react";
-import { Input } from "./ui/input";
+import { Input } from "../../../components/ui/input";
 
-type SearchByNameProps = {
+type SearchByIngredientsProps = {
 	setFilterKey: (key: string) => void;
 };
 
-export default function SearchByName({ setFilterKey }: SearchByNameProps) {
+export default function SearchByIngredients({
+	setFilterKey,
+}: SearchByIngredientsProps) {
 	const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,7 +27,7 @@ export default function SearchByName({ setFilterKey }: SearchByNameProps) {
 			/>
 			<Input
 				className="pl-10 py-5 bg-white"
-				placeholder="Search By cocktail name..."
+				placeholder="Search By ingredient name (eg. Vodka, Gin, Lime)..."
 				onChange={handleChange}
 			/>
 		</div>

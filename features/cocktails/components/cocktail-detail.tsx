@@ -1,11 +1,11 @@
 "use client";
 
+import AddToFavorite from "@/components/toggle-favorite";
 import { drinkType } from "@/types/cocktail";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import AddToFavorite from "./add-to-favorite";
 
 export default function CocktailDetail({ cocktail }: { cocktail: drinkType }) {
 	const router = useRouter();

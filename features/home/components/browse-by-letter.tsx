@@ -1,10 +1,10 @@
 "use client";
 
+import CocktailCard from "@/components/cocktail-card";
+import Skeleton from "@/components/skeleton";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import CocktailCard from "./cocktail-card";
-import Skeleton from "./skeleton";
 
 async function fetchDrinks(keyword: string) {
 	const res = await fetch(`/api/cocktails/search?type=f&key=${keyword}`);

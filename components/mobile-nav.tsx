@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useFavCocktail } from "@/stores/useFavCocktailStore";
+import { useFavCocktail } from "@/stores/use-favcocktail-store";
 import { Compass, FlaskConical, Heart, Search, Wine } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

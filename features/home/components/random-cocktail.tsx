@@ -1,15 +1,15 @@
 "use client";
 
+import ToggleFavorite from "@/components/toggle-favorite";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { cn, formatDrink } from "@/lib/utils";
 import { drinkType } from "@/types/cocktail";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowUpRight, RefreshCw } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import AddToFavorite from "./add-to-favorite";
-import { Badge } from "./ui/badge";
-import { Button } from "./ui/button";
-import { Card } from "./ui/card";
 
 async function fetchRandomDrink() {
 	const res = await fetch(`/api/cocktails/random`);
@@ -90,7 +90,7 @@ function RandomCocktailCard({ cocktail }: { cocktail: drinkType }) {
 
 				{/* Right Side: Content (The other 50%) */}
 				<div className="relative p-8 md:p-12 flex flex-col justify-center bg-card">
-					<AddToFavorite
+					<ToggleFavorite
 						cocktail={drink}
 						className="absolute top-6 right-6 scale-110"
 					/>

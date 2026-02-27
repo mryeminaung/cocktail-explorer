@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import CocktailCard from "./cocktail-card";
-import Skeleton from "./skeleton";
+import CocktailCard from "../../../components/cocktail-card";
+import Skeleton from "../../../components/skeleton";
 
 export default function SimilarCocktails({
 	ingredient,

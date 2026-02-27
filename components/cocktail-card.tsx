@@ -1,7 +1,7 @@
 import { Card, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import AddToFavorite from "./add-to-favorite";
+import ToggleFavorite from "./toggle-favorite";
 
 type CocktailCardProps = {
 	cocktail: {
@@ -24,16 +24,16 @@ export default function CocktailCard({ cocktail }: CocktailCardProps) {
 	return (
 		<Card
 			onClick={() => router.push(`/cocktail/${cocktail.idDrink}`)}
-			className="relative overflow-hidden p-0 group hover:cursor-pointer">
+			className="relative overflow-hidden p-0 hover:cursor-pointer">
 			<Image
 				src={cocktail.strDrinkThumb}
 				alt="Event cover"
 				width={100}
 				height={50}
 				loading="eager"
-				className="object-cover w-full transition-transform duration-300 group-hover:scale-110"
+				className="object-cover w-full transition-transform duration-300 hover:scale-110"
 			/>
-			<AddToFavorite
+			<ToggleFavorite
 				cocktail={drink}
 				className="absolute top-2 right-2"
 			/>

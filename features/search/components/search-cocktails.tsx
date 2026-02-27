@@ -1,14 +1,14 @@
 "use client";
 
+import CocktailCard from "@/components/cocktail-card";
+import Skeleton from "@/components/skeleton";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { FolderPen, ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import CocktailCard from "./cocktail-card";
 import SearchByIngredients from "./search-by-ingredients";
 import SearchByName from "./search-by-name";
-import Skeleton from "./skeleton";
-import { Button } from "./ui/button";
 
 export default function SearchCocktails() {
 	const [activeTab, setActiveTab] = useState<"name" | "ingredients">("name");
